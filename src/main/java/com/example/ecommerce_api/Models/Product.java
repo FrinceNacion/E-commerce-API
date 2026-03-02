@@ -32,5 +32,5 @@ public class Product {
     private String product_description;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<CartItem> cartItem;
+    private List<CartItem> cart_item;
 }

@@ -11,10 +11,10 @@ import java.util.List;
 @Setter
 public class CartDTO {
     private Long id;
-    private List<CartItemDTO> cartItems;
+    private List<CartItemDTO> cart_items_list;
 
-    public CartDTO(Long id, List<CartItemDTO> cartItemsResponse){
+    public CartDTO(Long id, List<CartItemDTO> cart_items_response){
         this.id = id;
-        cartItems = cartItemsResponse;
+        cart_items_list = cart_items_response;
     }
 }

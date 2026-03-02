@@ -13,45 +13,46 @@ import java.util.List;
 
 @Service
 public class CartService {
-    private final CartRepository cartRepository;
-    private final ProductRepository productRepository;
-    private final CartItemRepository cartItemRepository;
+    private final CartRepository cart_repository;
+    private final ProductRepository product_repository;
+    private final CartItemRepository cart_item_repository;
 
-    public CartService(CartRepository cartRepository, ProductRepository productRepository, CartItemRepository cartItemRepository) {
-        this.cartRepository = cartRepository;
-        this.productRepository = productRepository;
-        this.cartItemRepository = cartItemRepository;
+    public CartService(CartRepository cart_repository, ProductRepository product_repository, CartItemRepository cart_item_repository) {
+        this.cart_repository = cart_repository;
+        this.product_repository = product_repository;
+        this.cart_item_repository = cart_item_repository;
     }
 
     @Transactional
     public Cart createCart(Cart cart){
-        return cartRepository.save(cart);
+        return cart_repository.save(cart);
     }
 
     @Transactional
     public List<Cart> getCart(){
-        return cartRepository.findAll();
+        return cart_repository.findAll();
     }
 
     @Transactional
     public List<CartItem> getAllCartItems(){
-        return cartItemRepository.findAll();
+        return cart_item_repository.findAll();
     }
 
     @Transactional
     public CartItem addItemToCart(Long cart_id, Long product_id){
-        Cart cart = cartRepository.findById(cart_id).orElseThrow(
+        Cart cart = cart_repository.findById(cart_id).orElseThrow(
                 () -> new RuntimeException("No cart found")
         );
 
-        Product product = productRepository.findById(product_id).orElseThrow(
+        Product product = product_repository.findById(product_id).orElseThrow(
                 () -> new RuntimeException("No item found")
         );
 
-        CartItem cartItem = new CartItem();
-        cartItem.setProduct(product);
-        cartItem.setCart(cart);
+        CartItem cart_item = new CartItem();
+        cart_item.setProduct(product);
+        cart_item.setCart(cart);
 
-        return cartItemRepository.save(cartItem);
+        return cart_item_repository.save(cart_item);
     }
+
 }

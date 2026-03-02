@@ -9,12 +9,12 @@ import lombok.Setter;
 @Setter
 public class ProductDTO {
     private Long id;
-    private String productName;
-    private float productPrice;
+    private String product_name;
+    private float product_price;
 
-    public ProductDTO(Long id, String productName, float productPrice){
+    public ProductDTO(Long id, String product_name, float product_price){
         this.id = id;
-        this.productName = productName;
-        this.productPrice = productPrice;
+        this.product_name = product_name;
+        this.product_price = product_price;
     }
 }

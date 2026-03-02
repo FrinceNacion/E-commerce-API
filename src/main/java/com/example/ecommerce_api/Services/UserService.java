@@ -31,7 +31,7 @@ public class UserService {
                 user.getEmail(),
                 new CartDTO(
                         user.getCart().getId(),
-                        user.getCart().getCartItem().stream().map(
+                        user.getCart().getCart_item().stream().map(
                                 cartItem -> new CartItemDTO(cartItem.getId(),
                                         new ProductDTO(cartItem.getProduct().getId(), cartItem.getProduct().getProduct_name(), cartItem.getProduct().getProduct_price()))
                         ).toList()
@@ -43,7 +43,7 @@ public class UserService {
     public UserDTO getUser(Long id){
         User user = userRepository.findById(id).get();
         Cart cart = user.getCart();
-        List<CartItemDTO> cartItems = cart.getCartItem().stream().map(
+        List<CartItemDTO> cartItems = cart.getCart_item().stream().map(
                 cartItem -> new CartItemDTO(cartItem.getId(),
                         new ProductDTO(cartItem.getProduct().getId(), cartItem.getProduct().getProduct_name(), cartItem.getProduct().getProduct_price()))
         ).toList();

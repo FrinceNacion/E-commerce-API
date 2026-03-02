@@ -18,10 +18,8 @@ public class Cart {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    //Cause JSON infinite reference (Cart -> User -> Cart...)
-    //TODO: Ayusin mo 'to
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private List<CartItem> cartItem;
+    private List<CartItem> cart_item;
 }

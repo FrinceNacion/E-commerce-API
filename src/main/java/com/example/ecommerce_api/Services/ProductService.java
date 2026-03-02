@@ -10,24 +10,24 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-    private final ProductRepository productRepository;
+    private final ProductRepository product_repository;
 
-    public ProductService(ProductRepository productRepository){
-        this.productRepository = productRepository;
+    public ProductService(ProductRepository product_repository){
+        this.product_repository = product_repository;
     }
 
     @Transactional
     public Product createProduct(Product product){
-        return productRepository.save(product);
+        return product_repository.save(product);
     }
 
     @Transactional
     public List<Product> getAllProducts(){
-        return productRepository.findAll();
+        return product_repository.findAll();
     }
 
     @Transactional
     public Optional<Product> getProductById(Long id){
-        return productRepository.findById(id);
+        return product_repository.findById(id);
     }
 }

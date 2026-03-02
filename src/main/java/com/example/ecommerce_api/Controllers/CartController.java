@@ -10,20 +10,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/cart")
 public class CartController {
-    private final CartService cartService;
+    private final CartService cart_service;
 
-    public CartController(CartService cartService) {
-        this.cartService = cartService;
+    public CartController(CartService cart_service) {
+        this.cart_service = cart_service;
     }
 
     @GetMapping("")
     public List<Cart> getAllCartItems(){
-        return cartService.getCart();
+        return cart_service.getCart();
     }
 
     @PostMapping("/{cart_id}/item")
     // @RequestBody Long product_id
-    public CartItem addToCart(@PathVariable("cart_id") Long cart_id){
-        return cartService.addItemToCart(cart_id, 5L);
+    public CartItem addToCart(@PathVariable("cart_id") Long cart_id, @RequestBody Long product_id){
+        return cart_service.addItemToCart(cart_id, product_id);
     }
 }

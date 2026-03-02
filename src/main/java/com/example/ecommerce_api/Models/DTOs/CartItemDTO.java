@@ -10,10 +10,10 @@ import lombok.Setter;
 @Setter
 public class CartItemDTO {
     private Long id;
-    private ProductDTO productItem;
+    private ProductDTO product_item;
 
-    public CartItemDTO(Long id, ProductDTO productResponse){
+    public CartItemDTO(Long id, ProductDTO product_response){
         this.id = id;
-        productItem = productResponse;
+        product_item = product_response;
     }
 }

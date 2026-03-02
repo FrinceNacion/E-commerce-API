@@ -10,24 +10,24 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private final ProductService productService;
+    private final ProductService product_service;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public ProductController(ProductService product_service) {
+        this.product_service = product_service;
     }
 
     @GetMapping("")
     public List<Product> getAllProducts(){
-        return productService.getAllProducts();
+        return product_service.getAllProducts();
     }
 
     @GetMapping("/{id}")
     public Optional<Product> getProductById(@PathVariable("id") Long product_id){
-        return productService.getProductById(product_id);
+        return product_service.getProductById(product_id);
     }
 
     @PostMapping("")
     public Product createProduct(@RequestBody Product product){
-        return productService.createProduct(product);
+        return product_service.createProduct(product);
     }
 }
