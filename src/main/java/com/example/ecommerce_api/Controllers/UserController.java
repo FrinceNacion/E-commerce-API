@@ -1,7 +1,7 @@
 package com.example.ecommerce_api.Controllers;
 
+import com.example.ecommerce_api.Models.DTOs.UserDTO;
 import com.example.ecommerce_api.Models.User;
-import com.example.ecommerce_api.Repositories.UserRepository;
 import com.example.ecommerce_api.Services.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +17,17 @@ public class UserController {
     }
 
     @GetMapping("")
-    public List<User> getAllUsers(){
+    public List<UserDTO> getAllUsers(){
         return userService.getAllUser();
     }
 
+    @GetMapping("/{id}")
+    public UserDTO getUserById(@PathVariable("id") Long id){
+        return userService.getUser(id);
+    }
+
     @PostMapping("")
-    public User createUser(@RequestBody User user){
+    public User createUser(@RequestBody UserDTO user){
         return userService.createUser(user);
     }
 }

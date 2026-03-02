@@ -29,7 +29,7 @@ public class CartService {
     }
 
     @Transactional
-    public List<Cart> getAllCart(){
+    public List<Cart> getCart(){
         return cartRepository.findAll();
     }
 

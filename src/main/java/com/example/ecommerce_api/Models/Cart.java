@@ -18,7 +18,6 @@ public class Cart {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     //Cause JSON infinite reference (Cart -> User -> Cart...)
     //TODO: Ayusin mo 'to
     private User user;
