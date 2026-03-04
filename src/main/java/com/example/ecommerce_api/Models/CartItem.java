@@ -8,7 +8,7 @@ import lombok.Setter;
 @Table(name = "Cart_Items")
 @Getter
 @Setter
-public class CartItem {
+public class CartItem extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

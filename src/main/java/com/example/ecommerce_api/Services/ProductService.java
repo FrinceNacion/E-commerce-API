@@ -27,7 +27,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Optional<Product> getProductById(Long id){
+    public Optional<Product> getProductById(Integer id){
         return product_repository.findById(id);
     }
 }

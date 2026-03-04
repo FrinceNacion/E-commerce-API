@@ -40,7 +40,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO getUser(Long id){
+    public UserDTO getUser(Integer id){
         User user = userRepository.findById(id).get();
         Cart cart = user.getCart();
         List<CartItemDTO> cartItems = cart.getCart_item().stream().map(
