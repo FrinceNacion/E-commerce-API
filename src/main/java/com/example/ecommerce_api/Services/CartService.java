@@ -34,12 +34,16 @@ public class CartService {
     }
 
     @Transactional
-    public List<CartItem> getAllCartItems(){
-        return cart_item_repository.findAll();
+    public void removeItemInCart(Integer cart_id, Integer cart_item_id){
+        Cart cart = cart_repository.findById(cart_id).orElseThrow(
+                () -> new RuntimeException("No cart found")
+        );
+
+        cart_item_repository.deleteById(cart_item_id);
     }
 
     @Transactional
-    public CartItem addItemToCart(Long cart_id, Long product_id){
+    public CartItem addItemToCart(Integer cart_id, Integer product_id){
         Cart cart = cart_repository.findById(cart_id).orElseThrow(
                 () -> new RuntimeException("No cart found")
         );

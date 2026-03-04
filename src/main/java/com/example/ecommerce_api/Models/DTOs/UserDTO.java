@@ -8,12 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDTO {
-    private Long id;
+    private Integer id;
     private String username;
     private String email;
     private CartDTO user_cart;
 
-    public UserDTO(Long id, String username, String email, CartDTO user_cart_response){
+    public UserDTO(Integer id, String username, String email, CartDTO user_cart_response){
         this.id = id;
         this.username = username;
         this.email = email;

@@ -10,10 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 public class CartDTO {
-    private Long id;
+    private Integer id;
     private List<CartItemDTO> cart_items_list;
 
-    public CartDTO(Long id, List<CartItemDTO> cart_items_response){
+    public CartDTO(Integer id, List<CartItemDTO> cart_items_response){
         this.id = id;
         cart_items_list = cart_items_response;
     }

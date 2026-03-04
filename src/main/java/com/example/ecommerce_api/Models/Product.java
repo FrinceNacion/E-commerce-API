@@ -14,21 +14,21 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column(name = "product_name", length = 100)
+    @Column(name = "name", length = 100)
     private String product_name;
 
-    @Column(name = "product_price")
+    @Column(name = "price")
     private float product_price;
 
-    @Column(name = "product_stock")
+    @Column(name = "stock")
     private Integer product_stock;
 
-    @Column(name = "product_category")
+    @Column(name = "category")
     private String product_category;
 
-    @Column(name = "product_description")
+    @Column(name = "description")
     private String product_description;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

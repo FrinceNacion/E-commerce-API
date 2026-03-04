@@ -8,11 +8,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductDTO {
-    private Long id;
+    private Integer id;
     private String product_name;
     private float product_price;
 
-    public ProductDTO(Long id, String product_name, float product_price){
+    public ProductDTO(Integer id, String product_name, float product_price){
         this.id = id;
         this.product_name = product_name;
         this.product_price = product_price;
