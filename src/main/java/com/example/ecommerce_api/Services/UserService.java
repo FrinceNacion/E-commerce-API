@@ -1,17 +1,14 @@
 package com.example.ecommerce_api.Services;
 
 import com.example.ecommerce_api.Models.Cart;
-import com.example.ecommerce_api.Models.DTOs.CartDTO;
-import com.example.ecommerce_api.Models.DTOs.CartItemDTO;
-import com.example.ecommerce_api.Models.DTOs.ProductDTO;
-import com.example.ecommerce_api.Models.DTOs.UserDTO;
+import com.example.ecommerce_api.Models.DTOs.UserDTO.UserRequest;
+import com.example.ecommerce_api.Models.DTOs.UserDTO.UserResponse;
 import com.example.ecommerce_api.Models.User;
 import com.example.ecommerce_api.Repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -24,41 +21,34 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserDTO> getAllUser(){
-        return userRepository.findAll().stream().map(user -> new UserDTO(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                new CartDTO(
-                        user.getCart().getId(),
-                        user.getCart().getCart_item().stream().map(
-                                cartItem -> new CartItemDTO(cartItem.getId(),
-                                        new ProductDTO(cartItem.getProduct().getId(), cartItem.getProduct().getProduct_name(), cartItem.getProduct().getProduct_price()))
-                        ).toList()
-                )
-        )).toList();
-    }
-
-    @Transactional
-    public UserDTO getUser(Integer id){
-        User user = userRepository.findById(id).get();
-        Cart cart = user.getCart();
-        List<CartItemDTO> cartItems = cart.getCart_item().stream().map(
-                cartItem -> new CartItemDTO(cartItem.getId(),
-                        new ProductDTO(cartItem.getProduct().getId(), cartItem.getProduct().getProduct_name(), cartItem.getProduct().getProduct_price()))
+    public List<UserResponse> getAllUser(){
+        return userRepository.findAll().stream().map(user -> UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build()
         ).toList();
-
-        CartDTO cartResponse = new CartDTO(cart.getId(), cartItems);
-
-        return new UserDTO(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                cartResponse);
     }
 
     @Transactional
-    public User createUser(UserDTO request){
+    public UserResponse getUser(Integer id){
+        if (userRepository.findById(id).isEmpty()){
+            throw new RuntimeException();
+        }
+
+        User user = userRepository.findById(id).get();
+
+        return UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
+    }
+
+    @Transactional
+    public UserResponse createUser(UserRequest request){
         User user = new User();
         Cart user_cart = new Cart();
 
@@ -70,6 +60,12 @@ public class UserService {
         cartService.createCart(user_cart);
         user.setCart(user_cart);
 
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        return UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
     }
 }

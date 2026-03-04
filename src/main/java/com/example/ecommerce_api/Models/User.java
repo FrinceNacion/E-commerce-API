@@ -20,6 +20,9 @@ public class User extends BaseEntity{
     @Column(name = "email", length = 100)
     private String email;
 
+    @Column(name = "role", length = 50)
+    private RoleEnum role;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
