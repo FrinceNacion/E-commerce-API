@@ -1,9 +1,17 @@
 package com.example.ecommerce_api.Repositories;
 
-import com.example.ecommerce_api.Models.DTOs.UserDTO.UserResponse;
 import com.example.ecommerce_api.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
+@Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+
+    boolean existsByEmail(String email);
+    boolean existsByUsername(String username);
+    Optional<User> getByEmail(String email);
+    Optional<User> getByEmailAndUsername(String email, String username);
 
 }

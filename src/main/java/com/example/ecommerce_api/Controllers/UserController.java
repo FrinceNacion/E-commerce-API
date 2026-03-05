@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
     private final UserService user_service;
 
@@ -33,12 +33,15 @@ public class UserController {
         if (register_request.getPassword().isEmpty()){
             throw new RuntimeException();
         }
+        if (!register_request.getPassword().equals(register_request.getRetype_password())){
+            throw new RuntimeException("Password doesn't match.");
+        }
         return user_service.createUser(register_request);
     }
 
     @PostMapping("/login")
     public UserResponse login(@RequestBody LoginRequest login_request){
-        //TODO: implement login with JWT
+
         return null;
     }
 }

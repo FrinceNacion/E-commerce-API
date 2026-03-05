@@ -9,9 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CartItem extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")

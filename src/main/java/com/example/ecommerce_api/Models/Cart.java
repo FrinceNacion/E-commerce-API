@@ -11,9 +11,6 @@ import java.util.List;
 @Setter
 @Getter
 public class Cart extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "user_id")

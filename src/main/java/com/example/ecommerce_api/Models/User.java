@@ -10,10 +10,6 @@ import lombok.Setter;
 @Setter
 public class User extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     @Column(name = "username", length = 100)
     private String username;
 
@@ -22,6 +18,9 @@ public class User extends BaseEntity{
 
     @Column(name = "role", length = 50)
     private RoleEnum role;
+
+    @Column(name = "password", length = 100, nullable = false)
+    private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;

@@ -1,6 +1,7 @@
 package com.example.ecommerce_api.Services;
 
 import com.example.ecommerce_api.Models.Cart;
+import com.example.ecommerce_api.Models.DTOs.UserDTO.LoginRequest;
 import com.example.ecommerce_api.Models.DTOs.UserDTO.UserRequest;
 import com.example.ecommerce_api.Models.DTOs.UserDTO.UserResponse;
 import com.example.ecommerce_api.Models.User;
@@ -12,17 +13,17 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
-    private final CartService cartService;
+    private final UserRepository user_repository;
+    private final CartService cart_service;
 
-    public UserService(UserRepository userRepository, CartService cartService) {
-        this.userRepository = userRepository;
-        this.cartService = cartService;
+    public UserService(UserRepository user_repository, CartService cart_service) {
+        this.user_repository = user_repository;
+        this.cart_service = cart_service;
     }
 
     @Transactional
     public List<UserResponse> getAllUser(){
-        return userRepository.findAll().stream().map(user -> UserResponse.builder()
+        return user_repository.findAll().stream().map(user -> UserResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
@@ -33,12 +34,26 @@ public class UserService {
 
     @Transactional
     public UserResponse getUser(Integer id){
-        if (userRepository.findById(id).isEmpty()){
+        if (user_repository.findById(id).isEmpty()){
             throw new RuntimeException();
         }
 
-        User user = userRepository.findById(id).get();
+        User user = user_repository.findById(id).get();
 
+        return UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
+    }
+
+    @Transactional
+    public UserResponse getUserByEmail(String email){
+        if (user_repository.getByEmail(email).isEmpty()){
+            throw new RuntimeException();
+        }
+        User user =  user_repository.getByEmail(email).get();
         return UserResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
@@ -57,15 +72,25 @@ public class UserService {
 
         user_cart.setUser(user);
 
-        cartService.createCart(user_cart);
+        cart_service.createCart(user_cart);
         user.setCart(user_cart);
 
-        user = userRepository.save(user);
+        user = user_repository.save(user);
         return UserResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .role(user.getRole())
                 .build();
+    }
+
+    @Transactional
+    public String login(LoginRequest request){
+        if (!user_repository.existsByEmail(request.getEmail()) || !user_repository.existsByUsername(request.getUsername())){
+            throw new RuntimeException();
+        }
+        UserResponse user = getUserByEmail(request.getEmail());
+        //if (request.getPassword().equals())
+        return "";
     }
 }

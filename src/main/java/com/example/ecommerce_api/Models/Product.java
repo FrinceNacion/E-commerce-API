@@ -12,10 +12,6 @@ import java.util.List;
 @Setter
 public class Product extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     @Column(name = "name", length = 100)
     private String product_name;
 
