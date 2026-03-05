@@ -2,6 +2,7 @@ package com.example.ecommerce_api.Services;
 
 import com.example.ecommerce_api.Models.Cart;
 import com.example.ecommerce_api.Models.DTOs.UserDTO.LoginRequest;
+import com.example.ecommerce_api.Models.DTOs.UserDTO.UserMapper;
 import com.example.ecommerce_api.Models.DTOs.UserDTO.UserRequest;
 import com.example.ecommerce_api.Models.DTOs.UserDTO.UserResponse;
 import com.example.ecommerce_api.Models.User;
@@ -23,13 +24,7 @@ public class UserService {
 
     @Transactional
     public List<UserResponse> getAllUser(){
-        return user_repository.findAll().stream().map(user -> UserResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .build()
-        ).toList();
+        return user_repository.findAll().stream().map(UserMapper::toUserResponse).toList();
     }
 
     @Transactional
@@ -40,12 +35,7 @@ public class UserService {
 
         User user = user_repository.findById(id).get();
 
-        return UserResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .build();
+        return UserMapper.toUserResponse(user);
     }
 
     @Transactional
@@ -54,12 +44,7 @@ public class UserService {
             throw new RuntimeException();
         }
         User user =  user_repository.getByEmail(email).get();
-        return UserResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .build();
+        return UserMapper.toUserResponse(user);
     }
 
     @Transactional
@@ -76,12 +61,7 @@ public class UserService {
         user.setCart(user_cart);
 
         user = user_repository.save(user);
-        return UserResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .build();
+        return UserMapper.toUserResponse(user);
     }
 
     @Transactional
@@ -91,6 +71,7 @@ public class UserService {
         }
         UserResponse user = getUserByEmail(request.getEmail());
         //if (request.getPassword().equals())
+        //TODO: update mock login
         return "";
     }
 }
