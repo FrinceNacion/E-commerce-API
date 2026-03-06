@@ -1,13 +1,12 @@
 package com.example.ecommerce_api.Services;
 
 import com.example.ecommerce_api.Models.Cart;
-import com.example.ecommerce_api.Models.DTOs.UserDTO.LoginRequest;
-import com.example.ecommerce_api.Models.DTOs.UserDTO.UserMapper;
-import com.example.ecommerce_api.Models.DTOs.UserDTO.UserRequest;
-import com.example.ecommerce_api.Models.DTOs.UserDTO.UserResponse;
+import com.example.ecommerce_api.Models.DTOs.UserDTO.*;
 import com.example.ecommerce_api.Models.User;
 import com.example.ecommerce_api.Repositories.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.config.authentication.PasswordEncoderParser;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +15,12 @@ import java.util.List;
 public class UserService {
     private final UserRepository user_repository;
     private final CartService cart_service;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository user_repository, CartService cart_service) {
+    public UserService(UserRepository user_repository, CartService cart_service, PasswordEncoder passwordEncoder) {
         this.user_repository = user_repository;
         this.cart_service = cart_service;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -48,12 +49,13 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse createUser(UserRequest request){
+    public UserResponse createUser(RegisterRequest request){
         User user = new User();
         Cart user_cart = new Cart();
 
         user.setEmail(request.getEmail());
         user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         user_cart.setUser(user);
 
