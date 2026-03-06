@@ -5,6 +5,7 @@ import com.example.ecommerce_api.Models.DTOs.UserDTO.RegisterRequest;
 import com.example.ecommerce_api.Models.DTOs.UserDTO.UserRequest;
 import com.example.ecommerce_api.Models.DTOs.UserDTO.UserResponse;
 import com.example.ecommerce_api.Services.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public UserResponse createUser(@RequestBody RegisterRequest register_request){
+    public ResponseEntity<?> createUser(@RequestBody RegisterRequest register_request){
         if (register_request.getPassword().isEmpty()){
             throw new RuntimeException();
         }

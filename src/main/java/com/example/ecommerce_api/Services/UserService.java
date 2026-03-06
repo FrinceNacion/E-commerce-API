@@ -5,6 +5,7 @@ import com.example.ecommerce_api.Models.DTOs.UserDTO.*;
 import com.example.ecommerce_api.Models.User;
 import com.example.ecommerce_api.Repositories.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.authentication.PasswordEncoderParser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse createUser(RegisterRequest request){
+    public ResponseEntity<?> createUser(RegisterRequest request){
         User user = new User();
         Cart user_cart = new Cart();
 
@@ -62,8 +63,8 @@ public class UserService {
         cart_service.createCart(user_cart);
         user.setCart(user_cart);
 
-        user = user_repository.save(user);
-        return UserMapper.toUserResponse(user);
+        user_repository.save(user);
+        return ResponseEntity.ok("User registered");
     }
 
     @Transactional
